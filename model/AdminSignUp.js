@@ -6,7 +6,6 @@ const AdminData = new Schema(
   {
     email: { type: String, required: true, trim: true },
     password: { type: String, trim: true, required: true },
-    AdminId: { type: String, required: true },
   },
 
   { timestamps: true }

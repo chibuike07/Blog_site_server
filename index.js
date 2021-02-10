@@ -2,7 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-
+const { ClientSignupRouter } = require("./routes/ClientRegs/ClientSignUp");
+const { AdminRegRouter } = require("./routes/AdminRegs/AdminRegs");
 require("dotenv").config();
 
 //setting the mongoose options
@@ -34,6 +35,9 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+
+app.use("/api/v1/", ClientSignupRouter);
+app.use("/api/v1/", AdminRegRouter);
 
 //connecting to the database
 mongoose
