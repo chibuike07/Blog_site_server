@@ -59,8 +59,7 @@ exports.ClientPostSignUp = async (req, res) => {
 
           try {
             //saving the new member to mongodb
-            // await client.save();
-            console.log("client", client);
+            await client.save();
             await SendEmail(email, password, req);
             return res.status(200).json({
               massage: "signup successful",

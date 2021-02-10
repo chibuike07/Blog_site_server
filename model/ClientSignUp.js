@@ -32,19 +32,14 @@ const ClientData = new Schema(
     contact: contact,
     posts: { type: Number, default: 0 },
     registeredIpAddress: { type: String, required: true },
+    loggedIn: { type: Boolean, default: false },
+    loginTime: { type: String, default: "" },
+    ClientLoggedInIpAddress: { type: String, default: "" },
+    status: { type: Boolean, default: false },
   },
 
   { timestamps: true }
 );
-
-const ClientStatus = new Schema(
-  {
-    loginedIn: { type: Boolean, default: false },
-  },
-  { timestamps: true }
-);
-
-ClientData.add(ClientStatus);
 
 const ClientSignUp = mongoose.model("ClientData", ClientData);
 

@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const { ClientSignupRouter } = require("./routes/ClientRegs/ClientSignUp");
 const { AdminRegRouter } = require("./routes/AdminRegs/AdminRegs");
+const { ClientLoginRouter } = require("./routes/ClientRegs/ClientLoginRoute");
+const { AdminLoginRouter } = require("./routes/AdminRegs/AdminLogin");
 require("dotenv").config();
 
 //setting the mongoose options
@@ -38,6 +40,8 @@ app.use(cookieParser());
 
 app.use("/api/v1/", ClientSignupRouter);
 app.use("/api/v1/", AdminRegRouter);
+app.use("/api/v1/", ClientLoginRouter);
+app.use("/api/v1/", AdminLoginRouter);
 
 //connecting to the database
 mongoose
