@@ -31,7 +31,7 @@ const ClientData = new Schema(
     phone: { type: Number },
     contact: contact,
     posts: { type: Number, default: 0 },
-    registerdIpAddress: { type: String, default: "" },
+    registeredIpAddress: { type: String, required: true },
   },
 
   { timestamps: true }

@@ -8,6 +8,7 @@ const { SendEmail } = require("../../util/SendEmail");
 exports.ClientPostSignUp = async (req, res) => {
   //destructure the req body
   const { firstName, lastName, email, password } = req.body;
+  let registeredIpAddress = req.connection.remoteAddress.split(":")[3];
 
   //checking for error
   const { error } = ClientSignUpValidation.validate(req.body);
@@ -52,13 +53,14 @@ exports.ClientPostSignUp = async (req, res) => {
             email,
             firstName,
             lastName,
+            registeredIpAddress,
             password: hash,
           });
 
           try {
             //saving the new member to mongodb
-            await client.save();
-
+            // await client.save();
+            console.log("client", client);
             await SendEmail(email, password, req);
             return res.status(200).json({
               massage: "signup successful",
