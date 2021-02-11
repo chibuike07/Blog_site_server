@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 
 const {
   AdminSignUpValidation,
-} = require("../../middleware/AdminValidation/AdminSignUpValidation");
+} = require("../../middleware/Validators/AdminValidation/AdminSignUpValidation");
 const { SendEmail } = require("../../util/SendEmail");
 const { AdminSignUp } = require("../../model/AdminSignUp");
 

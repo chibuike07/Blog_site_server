@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {
   ClientSigninValidation,
-} = require("../../middleware/ClientValidation/ClientSignInValidation");
+} = require("../../middleware/Validators/ClientValidation/ClientSignInValidation");
 const { ClientSignUp } = require("../../model/ClientSignUp");
 
 module.exports.postClientLogin = async (req, res, next) => {
