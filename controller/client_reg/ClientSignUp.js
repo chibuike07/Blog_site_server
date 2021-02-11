@@ -1,9 +1,10 @@
 const bcrypt = require("bcryptjs");
-const {
-  ClientSignUpValidation,
-} = require("../../middleware/ClientValidation/ClientSignUpValidation");
+
 const { ClientSignUp } = require("../../model/ClientSignUp");
 const { SendEmail } = require("../../util/SendEmail");
+const {
+  ClientSignUpValidation,
+} = require("../../middleware/Validators/ClientValidation/ClientSignUpValidation");
 
 exports.ClientPostSignUp = async (req, res) => {
   //destructure the req body

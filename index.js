@@ -6,6 +6,20 @@ const { ClientSignupRouter } = require("./routes/ClientRegs/ClientSignUp");
 const { AdminRegRouter } = require("./routes/AdminRegs/AdminRegs");
 const { ClientLoginRouter } = require("./routes/ClientRegs/ClientLoginRoute");
 const { AdminLoginRouter } = require("./routes/AdminRegs/AdminLogin");
+const { ClientPostRouter } = require("./routes/ClientPosts/PostText");
+const { ClientGetPostRouter } = require("./routes/ClientPosts/GetPost");
+const {
+  ClientGetSpecifiedPostRouter,
+} = require("./routes/ClientPosts/GetSpecifiedPost");
+const {
+  ClientUpdateSpecifiedPostRouter,
+} = require("./routes/ClientPosts/UpdatePost");
+const {
+  ClientUpdateSpecifiedPostCommentRouter,
+} = require("./routes/ClientPosts/UpdateComments");
+const {
+  ClientGetPostBySpecifiedUserRouter,
+} = require("./routes/ClientPosts/GetPostBySpecifiedUser");
 require("dotenv").config();
 
 //setting the mongoose options
@@ -42,6 +56,12 @@ app.use("/api/v1/", ClientSignupRouter);
 app.use("/api/v1/", AdminRegRouter);
 app.use("/api/v1/", ClientLoginRouter);
 app.use("/api/v1/", AdminLoginRouter);
+app.use("/api/v1/", ClientPostRouter);
+app.use("/api/v1/", ClientGetPostRouter);
+app.use("/api/v1/", ClientGetSpecifiedPostRouter);
+app.use("/api/v1/", ClientUpdateSpecifiedPostRouter);
+app.use("/api/v1/", ClientUpdateSpecifiedPostCommentRouter);
+app.use("/api/v1/", ClientGetPostBySpecifiedUserRouter);
 
 //connecting to the database
 mongoose

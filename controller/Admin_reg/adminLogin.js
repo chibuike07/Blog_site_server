@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {
   AdminSigninValidation,
-} = require("../../middleware/AdminValidation/AdminSignInValidation");
+} = require("../../middleware/Validators/AdminValidation/AdminSignInValidation");
 const { AdminSignUp } = require("../../model/AdminSignUp");
 
 module.exports.postAdminLogin = async (req, res, next) => {
