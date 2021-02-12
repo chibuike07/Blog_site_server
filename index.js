@@ -24,6 +24,9 @@ const GetUserProfileRouter = require("./routes/UserProfile/GetProfile");
 const UpdateUserProfileRouter = require("./routes/UserProfile/UpdateUserProfile");
 const UploadProfileImageRouter = require("./routes/UserProfile/UpdateProfilePhotos");
 const { ClientDeletePostRouter } = require("./routes/ClientPosts/DeletePost");
+const {
+  ClientLoggerStatusRouter,
+} = require("./routes/ClientPosts/upDateLoggerStatus");
 require("dotenv").config();
 
 //setting the mongoose options
@@ -70,6 +73,7 @@ app.use("/api/v1/", GetUserProfileRouter);
 app.use("/api/v1/", UpdateUserProfileRouter);
 app.use("/api/v1/", UploadProfileImageRouter);
 app.use("/api/v1/", ClientDeletePostRouter);
+app.use("/api/v1/", ClientLoggerStatusRouter);
 
 //connecting to the database
 mongoose
