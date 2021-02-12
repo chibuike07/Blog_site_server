@@ -33,21 +33,20 @@ module.exports.updateComment = async (req, res) => {
         },
       },
     },
-    { new: true },
-    (err, updated) => {
+
+    (err) => {
       if (err) {
         return res.status(400).json({
           message: "Your Update was not sucessful please try again" + error,
-          data: updated,
+
           status: "error",
         });
-      } else {
-        return res.status(200).json({
-          message: "Your comment was sent successfully",
-          status: "success",
-          data: updated,
-        });
       }
+
+      return res.status(200).json({
+        message: "Your comment was sent successfully",
+        status: "success",
+      });
     }
   );
 };

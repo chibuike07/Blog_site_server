@@ -2,6 +2,7 @@ const {
   ClientPostValidation,
 } = require("../../middleware/Validators/ClientPostValidation/PostValidation");
 const { ClientPostRequest } = require("../../model/ClientPosts");
+const { ClientSignUp } = require("../../model/ClientSignUp");
 
 exports.addPost = async (req, res) => {
   //destructruturing of client data from req.body
@@ -24,6 +25,19 @@ exports.addPost = async (req, res) => {
     body,
     clientId: req.client._id,
   });
+
+  //getting post count by a single client
+  const ClientPostCount = await ClientPostRequest.find({
+    clientId: req.client._id,
+  }).countDocuments();
+
+  //updating the count to the post document of the client
+  const ClientData = await ClientSignUp.findOneAndUpdate(
+    { _id: req.client._id },
+    {
+      $set: { posts: ClientPostCount },
+    }
+  );
 
   try {
     //saving data to  database
