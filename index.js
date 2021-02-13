@@ -24,6 +24,18 @@ const GetUserProfileRouter = require("./routes/UserProfile/GetProfile");
 const UpdateUserProfileRouter = require("./routes/UserProfile/UpdateUserProfile");
 const UploadProfileImageRouter = require("./routes/UserProfile/UpdateProfilePhotos");
 const { ClientDeletePostRouter } = require("./routes/ClientPosts/DeletePost");
+const {
+  ClientLoggerStatusRouter,
+} = require("./routes/ClientPosts/upDateLoggerStatus");
+const {
+  GetAllClientByAdminRouter,
+} = require("./routes/AdminRequest/GetClients");
+const {
+  GetRegisteredIpAddressByAdminRouter,
+} = require("./routes/AdminRequest/GetRegisteredIpAddress");
+const {
+  GetLastestLoggedInClientByAdminRouter,
+} = require("./routes/AdminRequest/GetLastestLoggerData");
 require("dotenv").config();
 
 //setting the mongoose options
@@ -46,8 +58,11 @@ const app = express();
 
 app.use(
   cors({
-    // origin: "http://localhost:3000",
-    origin: ORIGINPATH,
+    origin: [
+      `${process.env.FRONT_URL}`,
+      "http://192.168.43.35:3000",
+      // "http://localhost:3000",
+    ],
     credentials: true,
   })
 );
@@ -70,6 +85,10 @@ app.use("/api/v1/", GetUserProfileRouter);
 app.use("/api/v1/", UpdateUserProfileRouter);
 app.use("/api/v1/", UploadProfileImageRouter);
 app.use("/api/v1/", ClientDeletePostRouter);
+app.use("/api/v1/", ClientLoggerStatusRouter);
+app.use("/api/v1/", GetAllClientByAdminRouter);
+app.use("/api/v1/", GetRegisteredIpAddressByAdminRouter);
+app.use("/api/v1/", GetLastestLoggedInClientByAdminRouter);
 
 //connecting to the database
 mongoose

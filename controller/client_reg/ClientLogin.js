@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const {
   ClientSigninValidation,
@@ -42,7 +43,7 @@ module.exports.postClientLogin = async (req, res, next) => {
   let updatedDocs = {
     loggedIn: true,
     ClientLoggedInIpAddress: clientLoggedInIpAddress,
-    loginTime: new Date(),
+    loginTime: mongoose.now(),
   };
 
   await ClientSignUp.updateMany(

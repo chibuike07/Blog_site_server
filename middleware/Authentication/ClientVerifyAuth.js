@@ -22,7 +22,7 @@ module.exports.ClientVerifyAuth = async (req, res, next) => {
     next();
   } catch (error) {
     res.status(501).send({
-      message: "invalid token" + error,
+      message: "invalid token " + error,
       status: "error",
     });
   }
