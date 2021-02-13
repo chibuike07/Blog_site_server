@@ -31,11 +31,12 @@ exports.addPost = async (req, res) => {
     clientId: req.client._id,
   }).countDocuments();
 
+  console.log("ClientPostCount", ClientPostCount);
   //updating the count to the post document of the client
   const ClientData = await ClientSignUp.findOneAndUpdate(
     { _id: req.client._id },
     {
-      $set: { posts: ClientPostCount },
+      $set: { posts: ClientPostCount + 1 },
     }
   );
 

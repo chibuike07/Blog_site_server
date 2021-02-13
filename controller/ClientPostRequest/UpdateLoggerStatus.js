@@ -5,8 +5,6 @@ module.exports.UpdateLoggerStatus = async (req, res) => {
 
   const { loggedIn } = req.body;
 
-  console.log("loggedIn", loggedIn);
-
   const ClientPost = await ClientSignUp.findByIdAndUpdate(
     { _id: _id },
     {

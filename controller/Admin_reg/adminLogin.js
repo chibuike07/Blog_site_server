@@ -8,7 +8,7 @@ const { AdminSignUp } = require("../../model/AdminSignUp");
 module.exports.postAdminLogin = async (req, res, next) => {
   //getting email and password of the the user
   const { email, password } = req.body;
-  const { ADMIN_TOKEN_SECRETE, ADMIN_TOKEN_KEY } = process.env; // getting the token secret
+  const { SUPER_TOKEN_SECRETE, SUPER_TOKEN_KEY } = process.env; // getting the token secret
 
   //checking for error
   const { error } = AdminSigninValidation.validate(req.body);
@@ -39,16 +39,16 @@ module.exports.postAdminLogin = async (req, res, next) => {
   }
 
   //signing a token that will expire every 24hours
-  const token = jwt.sign({ _id: Admin._id }, ADMIN_TOKEN_SECRETE, {
+  const token = jwt.sign({ _id: Admin._id }, SUPER_TOKEN_SECRETE, {
     expiresIn: "24h", // expires in 24 hours
   });
 
   //checking if the header holds the token and sending the token to the vendor
   res
-    .cookie(ADMIN_TOKEN_KEY, token, {
+    .cookie(SUPER_TOKEN_KEY, token, {
       expires: new Date(new Date() + 86400000),
-      httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false,
+      httpOnly: true,
     })
     .json({
       message: "login successful",
