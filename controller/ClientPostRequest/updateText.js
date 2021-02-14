@@ -6,7 +6,9 @@ module.exports.updatePost = async (req, res) => {
   await ClientPostRequest.findByIdAndUpdate(
     id,
     req.body,
+
     { new: true },
+
     (err, updated) => {
       if (err) {
         return res.status(400).json({

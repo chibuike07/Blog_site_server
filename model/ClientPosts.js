@@ -14,6 +14,7 @@ const ClientPosts = new Schema(
     body: { type: String, required: true, trim: true },
     clientId: { type: String, required: true, trim: true },
     comment: [comment],
+    status: { type: Boolean, enum: [false, true], default: false },
   },
 
   { timestamps: true }
