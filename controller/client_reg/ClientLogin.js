@@ -55,6 +55,7 @@ module.exports.postClientLogin = async (req, res, next) => {
   );
 
   //signing a token that will expire every 24hours
+
   const token = jwt.sign({ _id: Client._id }, CLIENT_TOKEN_SECRETE, {
     expiresIn: "24h", // expires in 24 hours
   });

@@ -36,6 +36,8 @@ const ClientData = new Schema(
     loginTime: { type: String, default: "" },
     ClientLoggedInIpAddress: { type: String, default: "" },
     active: { type: Boolean, default: true },
+    resetToken: { type: String },
+    expireToken: Date,
   },
 
   { timestamps: true }

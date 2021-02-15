@@ -2,7 +2,12 @@ const nodemailer = require("nodemailer");
 // const dotenv = require("dotenv").config();
 
 //sending email to the user
-exports.SendEmail = async (signupClientEmail, password, req, res) => {
+exports.ResetPasswordMessage = async (
+  signupClientEmail,
+  password,
+  req,
+  res
+) => {
   const { EMAIL, PASSWORD } = process.env;
 
   //defining the message porter
@@ -22,13 +27,11 @@ exports.SendEmail = async (signupClientEmail, password, req, res) => {
   let mailOptions = {
     from: `${EMAIL}`,
     to: signupClientEmail,
-    subject: "Registration",
-    html: `<h1>HELLO 
-    
-    </h1> <p>This mail is from Netapps Technology,</p> 
-    <p>Thank you for signing up with us.</p>
-     <p>This are your login details below.</p>
+    subject: "Change Of Password",
+    html: `<5>Change Of Password </h5>
       <p>Email: ${signupClientEmail}\n password: ${password}</p>
+
+        <p> your new pass password is ${password}</p>
 
       <span>you may as well click on the link below to get you signed in</span>
 
@@ -39,13 +42,10 @@ exports.SendEmail = async (signupClientEmail, password, req, res) => {
   //transporting the mail to the user
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
-      return res.status(400).json({
-        message: "please verify your email",
-        status: "error",
-      });
+      throw err;
     } else {
       return res.status(200).json({
-        message: "email sent successfully!",
+        message: "check your email for your new password",
         status: "success",
       });
     }
