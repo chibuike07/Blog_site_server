@@ -36,6 +36,13 @@ const {
 const {
   GetLastestLoggedInClientByAdminRouter,
 } = require("./routes/AdminRequest/GetLastestLoggerData");
+const {
+  ClientForgetPasswordRouter,
+} = require("./routes/ClientRegs/ForgotPassword");
+
+const {
+  ClientResetPasswordRouter,
+} = require("./routes/ClientRegs/ResetPassword");
 require("dotenv").config();
 
 //setting the mongoose options
@@ -58,11 +65,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [
-      `${process.env.FRONT_URL}`,
-      "http://192.168.43.35:3000",
-      // "http://localhost:3000",
-    ],
+    origin: "http://192.168.43.35:3000",
     credentials: true,
   })
 );
@@ -89,6 +92,8 @@ app.use("/api/v1/", ClientLoggerStatusRouter);
 app.use("/api/v1/", GetAllClientByAdminRouter);
 app.use("/api/v1/", GetRegisteredIpAddressByAdminRouter);
 app.use("/api/v1/", GetLastestLoggedInClientByAdminRouter);
+app.use("/api/v1/", ClientForgetPasswordRouter);
+app.use("/api/v1/", ClientResetPasswordRouter);
 
 //connecting to the database
 mongoose

@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 // const dotenv = require("dotenv").config();
 
 //sending email to the user
-exports.SendEmail = async (signupClientEmail, password, req, res) => {
+exports.ResetEmail = async (signupClientEmail, req, resetToken) => {
   const { EMAIL, PASSWORD } = process.env;
 
   //defining the message porter
@@ -22,17 +22,12 @@ exports.SendEmail = async (signupClientEmail, password, req, res) => {
   let mailOptions = {
     from: `${EMAIL}`,
     to: signupClientEmail,
-    subject: "Registration",
-    html: `<h1>HELLO 
+    subject: "Reset Password",
+    html: `<h5>You registered for password reset</h5>
     
-    </h1> <p>This mail is from Netapps Technology,</p> 
-    <p>Thank you for signing up with us.</p>
-     <p>This are your login details below.</p>
-      <p>Email: ${signupClientEmail}\n password: ${password}</p>
-
-      <span>you may as well click on the link below to get you signed in</span>
-
-      <a href=${req.headers.origin}/user/${signupClientEmail}/${password}>log in</a>
+    <p>
+    Find a <a href=${process.env.ORIGINPATH}/reset_password/${resetToken} >link </a> to reset your password
+    </p>
       `,
   };
 
