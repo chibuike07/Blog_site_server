@@ -19,6 +19,12 @@ const contact = {
     default: "",
     trim: true,
   },
+  account_type: {
+    type: String,
+    trim: true,
+    enum: ["Client"],
+    default: "Client",
+  },
 };
 
 const ClientData = new Schema(
@@ -37,6 +43,12 @@ const ClientData = new Schema(
     ClientLoggedInIpAddress: { type: String, default: "" },
     active: { type: Boolean, default: true },
     resetToken: { type: String },
+    account_type: {
+      type: String,
+      trim: true,
+      enum: ["Client"],
+      default: "Client",
+    },
     expireToken: Date,
   },
 

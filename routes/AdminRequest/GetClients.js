@@ -1,12 +1,12 @@
 const GetAllClientByAdminRouter = require("express").Router();
 const { getAllClients } = require("../../controller/AdminRequest/GetClients");
 const {
-  SuperVerifiedAuth,
-} = require("../../middleware/Authentication/SuperVerifiedAuth");
+  ClientVerifyAuth,
+} = require("../../middleware/Authentication/ClientVerifyAuth");
 
 GetAllClientByAdminRouter.get(
   "/admin/get_client",
-  // SuperVerifiedAuth,
+  // ClientVerifyAuth,
   getAllClients
 );
 

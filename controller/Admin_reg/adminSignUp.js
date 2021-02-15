@@ -58,7 +58,7 @@ exports.AdminPostSignUp = async (req, res) => {
             //saving the new member to mongodb
             await admin.save();
 
-            await SendEmail(email, password, req);
+            await SendEmail(email, password, req, res);
             return res.status(200).json({
               massage: "signup successful",
               data: admin,

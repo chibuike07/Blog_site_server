@@ -1,4 +1,5 @@
 const { ClientPostRequest } = require("../../model/ClientPosts");
+const { ClientSignUp } = require("../../model/ClientSignUp");
 const {
   UpdateCommentValidation,
 } = require("../../middleware/Validators/ClientPostValidation/UpdateCommentValidation");
@@ -6,7 +7,16 @@ const {
 module.exports.updateComment = async (req, res) => {
   //destructuring the req.body value;
   const { message } = req.body;
-  const { _id } = req.client;
+  const { role, _id } = req.client;
+
+  const checkRole = ClientSignUp.find({ account_type: role });
+
+  if (!checkRole) {
+    return res.status(403).jsoN({
+      message: "access denied",
+      status: "error",
+    });
+  }
 
   //getting the sent id
   const { post_id } = req.params;

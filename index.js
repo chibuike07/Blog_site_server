@@ -43,6 +43,14 @@ const {
 const {
   ClientResetPasswordRouter,
 } = require("./routes/ClientRegs/ResetPassword");
+const {
+  GetOneClientByAdminRouter,
+} = require("./routes/AdminRequest/GetSpecifiedClientByAdmin");
+
+const {
+  DeleteSpecifiedClientByAdminRouter,
+} = require("./routes/AdminRequest/DeleteClientByAdmin");
+
 require("dotenv").config();
 
 //setting the mongoose options
@@ -94,6 +102,8 @@ app.use("/api/v1/", GetRegisteredIpAddressByAdminRouter);
 app.use("/api/v1/", GetLastestLoggedInClientByAdminRouter);
 app.use("/api/v1/", ClientForgetPasswordRouter);
 app.use("/api/v1/", ClientResetPasswordRouter);
+app.use("/api/v1/", GetOneClientByAdminRouter);
+app.use("/api/v1/", DeleteSpecifiedClientByAdminRouter);
 
 //connecting to the database
 mongoose

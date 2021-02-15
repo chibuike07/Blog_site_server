@@ -1,16 +1,16 @@
 const GetRegisteredIpAddressByAdminRouter = require("express").Router();
 
 const {
-  SuperVerifiedAuth,
-} = require("../../middleware/Authentication/SuperVerifiedAuth");
-
-const {
   getRegisteredIpAddress,
 } = require("../../controller/AdminRequest/GetRegisteredIpAddress");
 
+const {
+  ClientVerifyAuth,
+} = require("../../middleware/Authentication/ClientVerifyAuth");
+
 GetRegisteredIpAddressByAdminRouter.get(
   "/admin/registeredIp",
-  // SuperVerifiedAuth,
+  // ClientVerifyAuth,
   getRegisteredIpAddress
 );
 

@@ -19,6 +19,15 @@ exports.addPost = async (req, res) => {
     });
   }
 
+  const checkRole = ClientSignUp.find({ account_type: req.client.role });
+
+  if (!checkRole) {
+    return res.status(403).jsoN({
+      message: "access denied",
+      status: "error",
+    });
+  }
+
   //setting data into collection object
   const Posts = new ClientPostRequest({
     title,

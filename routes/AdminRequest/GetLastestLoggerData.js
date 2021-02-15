@@ -1,16 +1,16 @@
 const GetLastestLoggedInClientByAdminRouter = require("express").Router();
 
 const {
-  SuperVerifiedAuth,
-} = require("../../middleware/Authentication/SuperVerifiedAuth");
-
-const {
   getLatestLogedInData,
 } = require("../../controller/AdminRequest/Posts/adminDashboardDatas");
 
+const {
+  ClientVerifyAuth,
+} = require("../../middleware/Authentication/ClientVerifyAuth");
+
 GetLastestLoggedInClientByAdminRouter.get(
   "/admin/dashboard_data",
-  // SuperVerifiedAuth,
+  // ClientVerifyAuth,
   getLatestLogedInData
 );
 

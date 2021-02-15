@@ -6,7 +6,6 @@ module.exports.UpdateProfile = async (req, res) => {
     firstName,
     lastName,
     email,
-    password,
     contact,
     profileImage,
     ClientLoggedInIpAddress,
@@ -25,6 +24,15 @@ module.exports.UpdateProfile = async (req, res) => {
     phone,
     posts,
   };
+
+  const checkRole = ClientSignUp.find({ account_type: req.client.role });
+
+  if (!checkRole) {
+    return res.status(403).jsoN({
+      message: "access denied",
+      status: "error",
+    });
+  }
 
   //updating the client profile data;
   const updatePersonalData = await ClientSignUp.findOneAndUpdate(

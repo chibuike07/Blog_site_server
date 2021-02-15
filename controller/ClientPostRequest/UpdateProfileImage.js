@@ -1,7 +1,17 @@
 const { ClientSignUp } = require("../../model/ClientSignUp");
 
 exports.upLoadImage = async (req, res) => {
-  const { _id } = req.client;
+  const { _id, role } = req.client;
+
+  const checkRole = ClientSignUp.find({ account_type: role });
+
+  if (!checkRole) {
+    return res.status(403).jsoN({
+      message: "access denied",
+      status: "error",
+    });
+  }
+
   await ClientSignUp.findOneAndUpdate(
     { _id: _id },
     { $set: { profileImage: req.file.path } },

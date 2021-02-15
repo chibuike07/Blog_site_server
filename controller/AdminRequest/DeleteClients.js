@@ -1,7 +1,8 @@
 const { ClientSignUp } = require("../../model/ClientSignUp");
 
-module.exports.getOneClient = async (req, res) => {
+module.exports.deleteOneClient = async (req, res) => {
   const { clientId } = req.params;
+  console.log("clientId", clientId);
 
   // getting one user
   const Client = await ClientSignUp.findOneAndDelete({ _id: clientId });

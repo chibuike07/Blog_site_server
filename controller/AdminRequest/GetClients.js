@@ -1,7 +1,18 @@
 const { ClientSignUp } = require("../../model/ClientSignUp");
+const { AdminSignUp } = require("../../model/AdminSignUp");
 
 module.exports.getAllClients = async (req, res) => {
   const { page = 1, limit = 20 } = req.query;
+  // const { role } = req.client;
+
+  // const checkRole = AdminSignUp.find({ account_type: role });
+
+  // if (!checkRole) {
+  //   return res.status(403).jsoN({
+  //     message: "access denied",
+  //     status: "error",
+  //   });
+  // }
 
   // getting all the booked event
   const Clients = await ClientSignUp.find({}, [

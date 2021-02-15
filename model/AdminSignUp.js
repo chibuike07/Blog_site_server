@@ -6,6 +6,12 @@ const AdminData = new Schema(
   {
     email: { type: String, required: true, trim: true },
     password: { type: String, trim: true, required: true },
+    account_type: {
+      type: String,
+      trim: true,
+      enum: ["Admin"],
+      default: "Admin",
+    },
   },
 
   { timestamps: true }
