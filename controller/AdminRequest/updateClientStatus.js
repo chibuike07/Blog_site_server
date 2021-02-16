@@ -1,8 +1,9 @@
 const { ClientSignUp } = require("../../model/ClientSignUp");
 const { AdminSignUp } = require("../../model/AdminSignUp");
 
-module.exports.getAllClients = async (req, res) => {
-  const { page = 1, limit = 20 } = req.query;
+module.exports.updateClientStatus = async (req, res) => {
+  const { userId } = req.params;
+  const { active } = req.query;
   // const { role } = req.client;
 
   // const checkRole = AdminSignUp.find({ account_type: role });
@@ -15,39 +16,31 @@ module.exports.getAllClients = async (req, res) => {
   // }
 
   // getting all the booked event
-  const Clients = await ClientSignUp.find({}, [
-    "firstName",
-    "lastName",
-    "phone",
-    "email",
-    "contact",
-    "profileImage",
-    "active",
-    "posts",
-    "_id",
-    "createdAt",
-  ])
-    .limit(limit * 1)
-    .skip((page - 1) * limit);
+  const ClientStatus = await ClientSignUp.updateOne(
+    { _id: userId },
+    {
+      $set: { active: active },
+    }
+  );
 
   //check for error
-  if (!Clients) {
+  if (!ClientStatus) {
     return res.status(401).json({
-      message: "No registered user yet",
+      message: "ID does not match!",
       status: "error",
     });
   }
 
-  if (Clients.length < 1) {
+  if (ClientStatus.length < 1) {
     return res.status(204).json({
-      infor: "No user Yet!!!",
+      infor: "data is empty",
       status: "success",
     });
   }
 
   //send the found data to the client
   return res.status(200).json({
-    data: Clients,
+    message: "status changed successfully",
     status: "success",
   });
 };

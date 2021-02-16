@@ -50,6 +50,12 @@ const {
 const {
   DeleteSpecifiedClientByAdminRouter,
 } = require("./routes/AdminRequest/DeleteClientByAdmin");
+const {
+  GetOneClientPostByAdminRouter,
+} = require("./routes/AdminRequest/GetSpecifiedPost");
+const {
+  UpdateOneClientStatusByAdminRouter,
+} = require("./routes/AdminRequest/updateClientStatus");
 
 require("dotenv").config();
 
@@ -104,6 +110,8 @@ app.use("/api/v1/", ClientForgetPasswordRouter);
 app.use("/api/v1/", ClientResetPasswordRouter);
 app.use("/api/v1/", GetOneClientByAdminRouter);
 app.use("/api/v1/", DeleteSpecifiedClientByAdminRouter);
+app.use("/api/v1/", GetOneClientPostByAdminRouter);
+app.use("/api/v1/", UpdateOneClientStatusByAdminRouter);
 
 //connecting to the database
 mongoose
