@@ -5,11 +5,12 @@ module.exports.getPostBySpecifiedUser = async (req, res) => {
   const { page = 1, limit = 20 } = req.query;
   const { _id, role } = req.client;
 
-  const checkRole = ClientSignUp.find({ account_type: role });
+  const checkRole = ClientSignUp.find({ account_type: role, active: true });
 
   if (!checkRole) {
-    return res.status(403).jsoN({
-      message: "access denied",
+    return res.status(403).json({
+      message:
+        "access denied. seems you have been deactived from performing any actions or you don't have the rights!  Please contact the admin",
       status: "error",
     });
   }

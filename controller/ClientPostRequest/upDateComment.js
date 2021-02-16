@@ -9,11 +9,12 @@ module.exports.updateComment = async (req, res) => {
   const { message } = req.body;
   const { role, _id } = req.client;
 
-  const checkRole = ClientSignUp.find({ account_type: role });
+  const checkRole = ClientSignUp.find({ account_type: role, active: true });
 
   if (!checkRole) {
-    return res.status(403).jsoN({
-      message: "access denied",
+    return res.status(403).json({
+      message:
+        "access denied. seems you have been deactived from performing any actions or you don't have the rights!  Please contact the admin",
       status: "error",
     });
   }
@@ -31,8 +32,26 @@ module.exports.updateComment = async (req, res) => {
       status: "error",
     });
   }
+  const clientHaveUpdatedBefore = await ClientPostRequest.findOne(
+    {
+      _id: post_id,
+      comment: { $exists: true },
+    },
+    ["comment"]
+  );
 
-  //updating comment
+  let mapComment;
+  if (clientHaveUpdatedBefore.comment.length > 0) {
+    mapComment = clientHaveUpdatedBefore.comment.filter((value) => {
+      return value.clientId === _id;
+    });
+    if (mapComment.length) {
+      return res.status(401).json({
+        message: "you have already commented on this post!",
+      });
+    }
+  }
+
   await ClientPostRequest.updateOne(
     { _id: post_id },
     {

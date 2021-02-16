@@ -1,6 +1,6 @@
 const { ClientSignUp } = require("../../model/ClientSignUp");
 
-module.exports.UpdateProfile = async (req, res) => {
+module.exports.UpdateProfileByAdmin = async (req, res) => {
   //destructuring updated data
   const {
     firstName,
@@ -13,6 +13,7 @@ module.exports.UpdateProfile = async (req, res) => {
     posts,
   } = req.body;
 
+  const { clientId } = req.params;
   //assigning the updated data to wrapper
   let wrapper = {
     firstName,
@@ -25,22 +26,9 @@ module.exports.UpdateProfile = async (req, res) => {
     posts,
   };
 
-  const checkRole = ClientSignUp.find({
-    account_type: req.client.role,
-    active: true,
-  });
-
-  if (!checkRole) {
-    return res.status(403).jsoN({
-      message:
-        "access denied. seems you have been deactived from performing any actions or you don't have the rights!  Please contact the admin",
-      status: "error",
-    });
-  }
-
   //updating the client profile data;
   const updatePersonalData = await ClientSignUp.findOneAndUpdate(
-    { _id: req.client._id, active: true },
+    { _id: clientId },
 
     //updating all the specified data
     {

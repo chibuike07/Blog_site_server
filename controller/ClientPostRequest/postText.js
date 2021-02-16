@@ -19,11 +19,15 @@ exports.addPost = async (req, res) => {
     });
   }
 
-  const checkRole = ClientSignUp.find({ account_type: req.client.role });
+  const checkRole = ClientSignUp.find({
+    account_type: req.client.role,
+    active: true,
+  });
 
   if (!checkRole) {
     return res.status(403).jsoN({
-      message: "access denied",
+      message:
+        "access denied. seems you have been deactived from performing any actions or you don't have the rights!  Please contact the admin",
       status: "error",
     });
   }
@@ -42,7 +46,7 @@ exports.addPost = async (req, res) => {
 
   //updating the count to the post document of the client
   const ClientData = await ClientSignUp.findOneAndUpdate(
-    { _id: req.client._id },
+    { _id: req.client._id, active: true },
     {
       $set: { posts: ClientPostCount + 1 },
     }

@@ -3,7 +3,9 @@ const { ClientSignUp } = require("../../model/ClientSignUp");
 module.exports.getuserProfile = async (req, res) => {
   //specifying things to send to the client
 
-  const checkRole = ClientSignUp.find({ account_type: req.client.role });
+  const checkRole = ClientSignUp.find({
+    account_type: req.client.role,
+  });
 
   if (!checkRole) {
     return res.status(403).jsoN({

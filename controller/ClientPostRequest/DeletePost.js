@@ -4,17 +4,18 @@ module.exports.deletePostByClient = async (req, res) => {
   const { postId } = req.params;
   const { _id, role } = req.client;
 
-  const checkRole = ClientSignUp.find({ account_type: role });
+  const checkRole = ClientSignUp.find({ account_type: role, active: true });
 
   if (!checkRole) {
-    return res.status(403).jsoN({
-      message: "access denied",
+    return res.status(403).json({
+      message:
+        "access denied. seems you have been deactived from performing any actions or you don't have the rights!  Please contact the admin",
       status: "error",
     });
   }
 
   const ClientPost = await ClientPostRequest.findByIdAndDelete(
-    { _id: postId, clientId: _id },
+    { _id: postId, clientId: _id, active: true },
     (err) => {
       if (err) {
         return res.status(400).json({

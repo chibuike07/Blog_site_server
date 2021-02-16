@@ -56,6 +56,9 @@ const {
 const {
   UpdateOneClientStatusByAdminRouter,
 } = require("./routes/AdminRequest/updateClientStatus");
+const {
+  UpdateOneClientProfileByAdminRouter,
+} = require("./routes/AdminRequest/upDateClientProfileByAdmin");
 
 require("dotenv").config();
 
@@ -112,6 +115,7 @@ app.use("/api/v1/", GetOneClientByAdminRouter);
 app.use("/api/v1/", DeleteSpecifiedClientByAdminRouter);
 app.use("/api/v1/", GetOneClientPostByAdminRouter);
 app.use("/api/v1/", UpdateOneClientStatusByAdminRouter);
+app.use("/api/v1/", UpdateOneClientProfileByAdminRouter);
 
 //connecting to the database
 mongoose
