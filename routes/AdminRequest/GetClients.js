@@ -1,12 +1,10 @@
 const GetAllClientByAdminRouter = require("express").Router();
 const { getAllClients } = require("../../controller/AdminRequest/GetClients");
-const {
-  ClientVerifyAuth,
-} = require("../../middleware/Authentication/ClientVerifyAuth");
+const AdminVerifyAuth = require("../../middleware/Authentication/AdminVerifyAuth");
 
 GetAllClientByAdminRouter.get(
   "/admin/get_client",
-  // ClientVerifyAuth,
+  AdminVerifyAuth,
   getAllClients
 );
 

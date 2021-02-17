@@ -3,14 +3,16 @@ const { ClientSignUp } = require("../../model/ClientSignUp");
 
 module.exports.updatePost = async (req, res) => {
   const { id } = req.params;
-  const { role } = req.client;
 
-  const checkRole = ClientSignUp.find({ account_type: role, active: true });
+  const checkRole = await ClientSignUp.find({
+    _id: req.client.id,
+    active: { $ne: false },
+  });
 
-  if (!checkRole) {
+  if (!checkRole.length) {
     return res.status(403).json({
       message:
-        "access denied. seems you have been deactived from performing any actions or you don't have the rights!  Please contact the admin",
+        "access denied! seems you have been deactived from performing any actions or you don't have the rights!  Please contact the admin",
       status: "error",
     });
   }

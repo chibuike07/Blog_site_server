@@ -3,12 +3,14 @@ const jwt = require("jsonwebtoken");
 const {
   AdminSigninValidation,
 } = require("../../middleware/Validators/AdminValidation/AdminSignInValidation");
+
 const { AdminSignUp } = require("../../model/AdminSignUp");
+const AdminGeneratedToken = require("../../middleware/Authentication/AdminGeneratedToken");
+const { Role } = require("../../util/Role");
 
 module.exports.postAdminLogin = async (req, res, next) => {
   //getting email and password of the the user
   const { email, password } = req.body;
-  const { USER_TOKEN_SECRETE, USER_TOKEN_KEY } = process.env; // getting the token secret
 
   //checking for error
   const { error } = AdminSigninValidation.validate(req.body);
@@ -22,10 +24,12 @@ module.exports.postAdminLogin = async (req, res, next) => {
   }
 
   //checking if email exist in the database
-  const Admin = await AdminSignUp.findOne({ email: email });
+  const Admin = await AdminSignUp.findOne({
+    email: email,
+  });
 
   if (!Admin) {
-    return res.status(400).json({ message: "email or password incorrect" });
+    return res.status(400).json({ message: "email or password is incorrect" });
   }
 
   const isValid = await bcrypt.compare(password, Admin.password);
@@ -38,26 +42,6 @@ module.exports.postAdminLogin = async (req, res, next) => {
     });
   }
 
-  //signing a token that will expire every 24hours
-  const token = jwt.sign(
-    { _id: Admin._id, role: Admin.account_type },
-    USER_TOKEN_SECRETE,
-    {
-      expiresIn: "24h", // expires in 24 hours
-    }
-  );
-
   //checking if the header holds the token and sending the token to the vendor
-
-  res
-    .cookie(USER_TOKEN_KEY, token, {
-      expires: new Date(new Date() + 86400000),
-      secure: process.env.NODE_ENV === "production" ? true : false,
-      httpOnly: true,
-    })
-    .json({
-      message: "login successful",
-      status: "success",
-      token,
-    });
+  await AdminGeneratedToken(res, Admin._id, Admin.account_type);
 };

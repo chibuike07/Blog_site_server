@@ -4,13 +4,11 @@ const {
   getLatestLogedInData,
 } = require("../../controller/AdminRequest/Posts/adminDashboardDatas");
 
-const {
-  ClientVerifyAuth,
-} = require("../../middleware/Authentication/ClientVerifyAuth");
+const AdminVerifyAuth = require("../../middleware/Authentication/AdminVerifyAuth");
 
 GetLastestLoggedInClientByAdminRouter.get(
   "/admin/dashboard_data",
-  // ClientVerifyAuth,
+  AdminVerifyAuth,
   getLatestLogedInData
 );
 

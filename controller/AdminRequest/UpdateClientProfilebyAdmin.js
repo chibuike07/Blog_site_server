@@ -1,4 +1,5 @@
 const { ClientSignUp } = require("../../model/ClientSignUp");
+const { AdminSignUp } = require("../../model/AdminSignUp");
 
 module.exports.UpdateProfileByAdmin = async (req, res) => {
   //destructuring updated data
@@ -25,6 +26,17 @@ module.exports.UpdateProfileByAdmin = async (req, res) => {
     phone,
     posts,
   };
+
+  const { role } = req.admin;
+
+  const checkRole = await AdminSignUp.find({ account_type: role });
+
+  if (!checkRole) {
+    return res.status(403).jsoN({
+      message: "access denied",
+      status: "error",
+    });
+  }
 
   //updating the client profile data;
   const updatePersonalData = await ClientSignUp.findOneAndUpdate(

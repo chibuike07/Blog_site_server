@@ -5,6 +5,8 @@ const {
   ClientSigninValidation,
 } = require("../../middleware/Validators/ClientValidation/ClientSignInValidation");
 const { ClientSignUp } = require("../../model/ClientSignUp");
+const { Role } = require("../../util/Role");
+const ClientGenerateToken = require("../../middleware/Authentication/ClientGenerateToken");
 
 module.exports.postClientLogin = async (req, res, next) => {
   //getting email and password of the the user
@@ -25,7 +27,10 @@ module.exports.postClientLogin = async (req, res, next) => {
   let clientLoggedInIpAddress = req.connection.remoteAddress.split(":")[3];
 
   //checking if email exist in the database
-  const Client = await ClientSignUp.findOne({ email: email });
+  const Client = await ClientSignUp.findOne({
+    email: email,
+    account_type: Role.CLIENT,
+  });
 
   if (!Client) {
     return res.status(400).json({ message: "email or password incorrect" });
@@ -40,40 +45,20 @@ module.exports.postClientLogin = async (req, res, next) => {
       status: "error",
     });
   }
+
   let updatedDocs = {
     loggedIn: true,
     ClientLoggedInIpAddress: clientLoggedInIpAddress,
     loginTime: mongoose.now(),
   };
 
-  await ClientSignUp.updateMany(
-    { email: email, loggedIn: "false" },
+  await ClientSignUp.updateOne(
+    { email: email, loggedIn: "false", account_type: Role.CLIENT },
     {
       $set: updatedDocs,
     },
     { multi: true }
   );
 
-  //signing a token that will expire every 24hours
-
-  const token = jwt.sign(
-    { _id: Client._id, role: Client.account_type },
-    USER_TOKEN_SECRETE,
-    {
-      expiresIn: "24h", // expires in 24 hours
-    }
-  );
-
-  //checking if the header holds the token and sending the token to the vendor
-  res
-    .cookie(USER_TOKEN_KEY, token, {
-      expires: new Date(new Date() + 86400000),
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production" ? true : false,
-    })
-    .json({
-      message: "login successful",
-      status: "success",
-      token,
-    });
+  await ClientGenerateToken(res, Client._id, Client.account_type);
 };

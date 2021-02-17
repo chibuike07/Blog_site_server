@@ -4,7 +4,10 @@ module.exports.getOnePost = async (req, res) => {
   //get  from params
   const { id } = req.params;
 
-  const Clientstatus = ClientSignUp.find({ active: true });
+  const Clientstatus = ClientSignUp.find({
+    _id: req.client.id,
+    active: { $ne: false },
+  });
 
   if (!Clientstatus) {
     return res.status(403).json({

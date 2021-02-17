@@ -1,8 +1,6 @@
 const GetOneClientPostByAdminRouter = require("express").Router();
 
-const {
-  ClientVerifyAuth,
-} = require("../../middleware/Authentication/ClientVerifyAuth");
+const AdminVerifyAuth = require("../../middleware/Authentication/AdminVerifyAuth");
 
 const {
   getOnePost,
@@ -10,7 +8,7 @@ const {
 
 GetOneClientPostByAdminRouter.get(
   "/admin/get_single_post/:postId",
-  // ClientVerifyAuth,
+  AdminVerifyAuth,
   getOnePost
 );
 

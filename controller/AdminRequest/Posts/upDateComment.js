@@ -2,14 +2,14 @@ const { ClientPostRequest } = require("../../model/ClientPosts");
 const {
   UpdateCommentValidation,
 } = require("../../middleware/Validators/ClientPostValidation/UpdateCommentValidation");
+const { AdminSignUp } = require("../../../model/AdminSignUp");
 
 module.exports.updateComment = async (req, res) => {
   //destructuring the req.body value;
-  const { message } = req.body;
-  const { _id } = req.client;
-
   //getting the sent id
   const { post_id } = req.params;
+  const { message } = req.body;
+  const { role } = req.admin;
 
   //checking for errors
   const { error } = UpdateCommentValidation.validate(req.body);
@@ -18,6 +18,15 @@ module.exports.updateComment = async (req, res) => {
     //sending error message
     return res.status(400).json({
       message: error.details[0].message.split('"').join(""),
+      status: "error",
+    });
+  }
+
+  const checkRole = await AdminSignUp.find({ account_type: role });
+
+  if (!checkRole) {
+    return res.status(403).jsoN({
+      message: "access denied",
       status: "error",
     });
   }

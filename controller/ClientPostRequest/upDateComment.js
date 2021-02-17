@@ -7,9 +7,12 @@ const {
 module.exports.updateComment = async (req, res) => {
   //destructuring the req.body value;
   const { message } = req.body;
-  const { role, _id } = req.client;
+  const { id } = req.client;
 
-  const checkRole = ClientSignUp.find({ account_type: role, active: true });
+  const checkRole = await ClientSignUp.findOne({
+    _id: id,
+    active: { $ne: false },
+  });
 
   if (!checkRole) {
     return res.status(403).json({
@@ -43,7 +46,7 @@ module.exports.updateComment = async (req, res) => {
   let mapComment;
   if (clientHaveUpdatedBefore.comment.length > 0) {
     mapComment = clientHaveUpdatedBefore.comment.filter((value) => {
-      return value.clientId === _id;
+      return value.clientId === id;
     });
     if (mapComment.length) {
       return res.status(401).json({
@@ -58,7 +61,7 @@ module.exports.updateComment = async (req, res) => {
       $addToSet: {
         comment: {
           message: message,
-          clientId: _id,
+          clientId: id,
         },
       },
     },

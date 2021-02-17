@@ -1,15 +1,13 @@
 const UpdateOneClientProfileByAdminRouter = require("express").Router();
 
-const {
-  ClientVerifyAuth,
-} = require("../../middleware/Authentication/ClientVerifyAuth");
+const AdminVerifyAuth = require("../../middleware/Authentication/AdminVerifyAuth");
 const {
   UpdateProfileByAdmin,
 } = require("../../controller/AdminRequest/UpdateClientProfilebyAdmin");
 
 UpdateOneClientProfileByAdminRouter.get(
   "/admin/put_client_profile/:clientId",
-  // ClientVerifyAuth,
+  AdminVerifyAuth,
   UpdateProfileByAdmin
 );
 

@@ -4,17 +4,16 @@ const { AdminSignUp } = require("../../model/AdminSignUp");
 module.exports.getOneClient = async (req, res) => {
   const { userId } = req.params;
 
-  // const { role } = req.client;
+  const { role } = req.admin;
 
-  // const checkRole = AdminSignUp.find({ account_type: role });
+  const checkRole = await AdminSignUp.find({ account_type: role });
 
-  // if (!checkRole) {
-  //   return res.status(403).jsoN({
-  //     message: "access denied",
-  //     status: "error",
-  //   });
-  // }
-
+  if (!checkRole) {
+    return res.status(403).jsoN({
+      message: "access denied",
+      status: "error",
+    });
+  }
   // getting one user
   const Client = await ClientSignUp.find({ _id: userId }, [
     "firstName",

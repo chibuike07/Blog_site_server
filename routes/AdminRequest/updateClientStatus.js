@@ -1,8 +1,6 @@
 const UpdateOneClientStatusByAdminRouter = require("express").Router();
 
-const {
-  ClientVerifyAuth,
-} = require("../../middleware/Authentication/ClientVerifyAuth");
+const AdminVerifyAuth = require("../../middleware/Authentication/AdminVerifyAuth");
 
 const {
   updateClientStatus,
@@ -10,7 +8,7 @@ const {
 
 UpdateOneClientStatusByAdminRouter.put(
   "/admin/update_client_status/:userId",
-  // ClientVerifyAuth,
+  AdminVerifyAuth,
   updateClientStatus
 );
 

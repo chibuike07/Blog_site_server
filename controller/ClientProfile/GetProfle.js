@@ -14,7 +14,7 @@ module.exports.getuserProfile = async (req, res) => {
     });
   }
 
-  const User = await ClientSignUp.find({ _id: req.client._id }, [
+  const User = await ClientSignUp.find({ _id: req.client.id }, [
     "firstName",
     "lastName",
     "email",

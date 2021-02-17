@@ -1,9 +1,21 @@
 const { ClientPostRequest } = require("../../../model/ClientPosts");
+const { AdminSignUp } = require("../../../model/AdminSignUp");
 const { ClientSignUp } = require("../../../model/ClientSignUp");
 
 module.exports.getOnePost = async (req, res) => {
   //get  from params
   const { postId } = req.params;
+
+  const { id, role } = req.admin;
+
+  const checkRole = await AdminSignUp.find({ _id: id, account_type: role });
+
+  if (!checkRole) {
+    return res.status(403).json({
+      message: "access denied",
+      status: "error",
+    });
+  }
 
   //check for event that match the client query
   const findClientPost = await ClientPostRequest.findById({

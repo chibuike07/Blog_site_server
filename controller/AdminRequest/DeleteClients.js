@@ -1,8 +1,19 @@
 const { ClientSignUp } = require("../../model/ClientSignUp");
+const { AdminSignUp } = require("../../model/AdminSignUp");
 
 module.exports.deleteOneClient = async (req, res) => {
   const { clientId } = req.params;
   console.log("clientId", clientId);
+  const { id } = req.admin;
+
+  const checkRole = await AdminSignUp.find({ _id: id });
+
+  if (!checkRole.length) {
+    return res.status(403).json({
+      message: "access denied",
+      status: "error",
+    });
+  }
 
   // getting one user
   const Client = await ClientSignUp.findOneAndDelete({ _id: clientId });

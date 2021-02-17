@@ -59,6 +59,9 @@ const {
 const {
   UpdateOneClientProfileByAdminRouter,
 } = require("./routes/AdminRequest/upDateClientProfileByAdmin");
+const {
+  GetClientPostByAdminRouter,
+} = require("./routes/AdminRequest/GetPostByAdmin");
 
 require("dotenv").config();
 
@@ -82,7 +85,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://192.168.43.35:3000"],
+    origin: ["http://192.168.43.35:3000", "http://localhost:3000"],
     credentials: true,
   })
 );
@@ -116,6 +119,7 @@ app.use("/api/v1/", DeleteSpecifiedClientByAdminRouter);
 app.use("/api/v1/", GetOneClientPostByAdminRouter);
 app.use("/api/v1/", UpdateOneClientStatusByAdminRouter);
 app.use("/api/v1/", UpdateOneClientProfileByAdminRouter);
+app.use("/api/v1/", GetClientPostByAdminRouter);
 
 //connecting to the database
 mongoose

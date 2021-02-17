@@ -1,10 +1,12 @@
 const bcrypt = require("bcryptjs");
+const { AdminSignUp } = require("../../model/AdminSignUp");
 
 const {
   AdminSignUpValidation,
 } = require("../../middleware/Validators/AdminValidation/AdminSignUpValidation");
 const { SendEmail } = require("../../util/SendEmail");
-const { AdminSignUp } = require("../../model/AdminSignUp");
+
+const { Role } = require("../../util/Role");
 
 exports.AdminPostSignUp = async (req, res) => {
   //destructure the req body
@@ -22,7 +24,9 @@ exports.AdminPostSignUp = async (req, res) => {
   }
 
   //checking if email exist
-  const EmailExist = await AdminSignUp.findOne({ email: email });
+  const EmailExist = await AdminSignUp.findOne({
+    email: email,
+  });
 
   if (EmailExist) {
     return res
@@ -48,21 +52,21 @@ exports.AdminPostSignUp = async (req, res) => {
             status: "error",
           });
         } else {
-          const admin = new AdminSignUp({
+          const admin = await AdminSignUp.create({
             //creating an instance of Client data
             email,
+            account_type: Role.ADMIN,
             password: hash,
           });
 
           try {
             //saving the new member to mongodb
-            await admin.save();
+            // await admin.save();
 
             await SendEmail(email, password, req, res);
             return res.status(200).json({
-              massage: "signup successful",
-              data: admin,
-              userId: admin._id,
+              message:
+                "signup successful! Kindly check your email for your login details.",
               status: "success",
             });
           } catch (error) {

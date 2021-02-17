@@ -19,15 +19,15 @@ exports.addPost = async (req, res) => {
     });
   }
 
-  const checkRole = ClientSignUp.find({
-    account_type: req.client.role,
-    active: true,
+  const checkRole = await ClientSignUp.find({
+    _id: req.client.id,
+    active: { $ne: false },
   });
 
-  if (!checkRole) {
-    return res.status(403).jsoN({
+  if (!checkRole.length) {
+    return res.status(403).json({
       message:
-        "access denied. seems you have been deactived from performing any actions or you don't have the rights!  Please contact the admin",
+        "access denied! seems you have been deactived from performing any actions or you don't have the rights!  Please contact the admin",
       status: "error",
     });
   }
@@ -36,17 +36,17 @@ exports.addPost = async (req, res) => {
   const Posts = new ClientPostRequest({
     title,
     body,
-    clientId: req.client._id,
+    clientId: req.client.id,
   });
 
   //getting post count by a single client
   const ClientPostCount = await ClientPostRequest.find({
-    clientId: req.client._id,
+    clientId: req.client.id,
   }).countDocuments();
 
   //updating the count to the post document of the client
   const ClientData = await ClientSignUp.findOneAndUpdate(
-    { _id: req.client._id, active: true },
+    { _id: req.client.id, active: true },
     {
       $set: { posts: ClientPostCount + 1 },
     }

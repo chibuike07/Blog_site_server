@@ -29,15 +29,15 @@ const contact = {
 
 const ClientData = new Schema(
   {
-    firstName: { type: String, trim: true, required: true },
-    lastName: { type: String, trim: true, required: true },
-    email: { type: String, required: true, trim: true },
+    firstName: { type: String, trim: true },
+    lastName: { type: String, trim: true },
+    email: { type: String, trim: true },
     profileImage: { type: String, trim: true, default: "" },
-    password: { type: String, trim: true, required: true },
+    password: { type: String, trim: true },
     phone: { type: Number },
     contact: contact,
     posts: { type: Number, default: 0 },
-    registeredIpAddress: { type: String, required: true },
+    registeredIpAddress: { type: String },
     loggedIn: { type: Boolean, default: false },
     loginTime: { type: String, default: "" },
     ClientLoggedInIpAddress: { type: String, default: "" },
@@ -46,8 +46,8 @@ const ClientData = new Schema(
     account_type: {
       type: String,
       trim: true,
-      enum: ["Client"],
-      default: "Client",
+      enum: ["CLIENT", "ADMIN"],
+      default: "CLIENT",
     },
     expireToken: Date,
   },

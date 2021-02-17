@@ -5,7 +5,6 @@ module.exports.ClientVerifyAuth = async (req, res, next) => {
   const { USER_TOKEN_SECRETE, USER_TOKEN_KEY } = process.env;
 
   const token = req.cookies[USER_TOKEN_KEY] || "";
-  // console.log("verified", token);
   try {
     if (!token) {
       return res.status(401).send({

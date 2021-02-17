@@ -1,7 +1,19 @@
-const { ClientPostRequest } = require("../../model/ClientPosts");
+const { ClientPostRequest } = require("../../../model/ClientPosts");
+const { AdminSignUp } = require("../../../model/AdminSignUp");
 
-module.exports.getPost = async (req, res) => {
+module.exports.getPostByAdmin = async (req, res) => {
   const { page = 1, limit = 20 } = req.query;
+
+  const { role } = req.admin;
+
+  const checkRole = await AdminSignUp.find({ account_type: role });
+
+  if (!checkRole) {
+    return res.status(403).json({
+      message: "access denied",
+      status: "error",
+    });
+  }
 
   const ClientPost = await ClientPostRequest.find()
     .limit(limit * 1)
@@ -9,14 +21,14 @@ module.exports.getPost = async (req, res) => {
 
   if (!ClientPost) {
     return res.status(400).json({
-      message: "No event has been created",
+      message: "No post has been created",
       status: "error",
     });
   }
 
   if (ClientPost.length < 1) {
     return res.status(204).json({
-      message: "you have reached the page limit",
+      message: "data is empty",
       status: "success",
     });
   }

@@ -5,6 +5,7 @@ const { SendEmail } = require("../../util/SendEmail");
 const {
   ClientSignUpValidation,
 } = require("../../middleware/Validators/ClientValidation/ClientSignUpValidation");
+const { Role } = require("../../util/Role");
 
 exports.ClientPostSignUp = async (req, res) => {
   //destructure the req body
@@ -49,18 +50,19 @@ exports.ClientPostSignUp = async (req, res) => {
             status: "error",
           });
         } else {
-          const client = new ClientSignUp({
+          const client = ClientSignUp.create({
             //creating an instance of Client data
             email,
             firstName,
             lastName,
             registeredIpAddress,
+            account_type: Role.CLIENT,
             password: hash,
           });
 
           try {
             //saving the new member to mongodb
-            await client.save();
+            // await client.save();
             await SendEmail(email, password, req);
             return res.status(200).json({
               massage: "signup successful",

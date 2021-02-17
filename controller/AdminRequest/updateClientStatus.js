@@ -3,17 +3,17 @@ const { AdminSignUp } = require("../../model/AdminSignUp");
 
 module.exports.updateClientStatus = async (req, res) => {
   const { userId } = req.params;
-  const { active } = req.query;
-  // const { role } = req.client;
+  const { active } = req.body;
+  const { id } = req.admin;
 
-  // const checkRole = AdminSignUp.find({ account_type: role });
+  const checkRole = await AdminSignUp.find({ _id: id });
 
-  // if (!checkRole) {
-  //   return res.status(403).jsoN({
-  //     message: "access denied",
-  //     status: "error",
-  //   });
-  // }
+  if (!checkRole) {
+    return res.status(403).json({
+      message: "access denied",
+      status: "error",
+    });
+  }
 
   // getting all the booked event
   const ClientStatus = await ClientSignUp.updateOne(

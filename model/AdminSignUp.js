@@ -9,8 +9,8 @@ const AdminData = new Schema(
     account_type: {
       type: String,
       trim: true,
-      enum: ["Admin"],
-      default: "Admin",
+      enum: ["ADMIN"],
+      default: "ADMIN",
     },
   },
 
