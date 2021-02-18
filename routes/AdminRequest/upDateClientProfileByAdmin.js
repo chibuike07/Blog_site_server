@@ -5,7 +5,7 @@ const {
   UpdateProfileByAdmin,
 } = require("../../controller/AdminRequest/UpdateClientProfilebyAdmin");
 
-UpdateOneClientProfileByAdminRouter.get(
+UpdateOneClientProfileByAdminRouter.put(
   "/admin/put_client_profile/:clientId",
   AdminVerifyAuth,
   UpdateProfileByAdmin

@@ -24,6 +24,9 @@ module.exports.getOneClient = async (req, res) => {
     "profileImage",
     "posts",
     "_id",
+    "ClientLoggedInIpAddress",
+    "phone",
+    "posts",
     "createdAt",
   ]);
 

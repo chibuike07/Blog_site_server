@@ -8,7 +8,7 @@ module.exports.UpdateLoggerStatus = async (req, res) => {
   const ClientPost = await ClientSignUp.findByIdAndUpdate(
     { _id: id },
     {
-      $set: { loggedIn: loggedIn, loginTime: "" },
+      $set: { loggedIn: loggedIn },
     },
     (err) => {
       if (err) {

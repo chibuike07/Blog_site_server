@@ -46,7 +46,7 @@ const ClientData = new Schema(
     account_type: {
       type: String,
       trim: true,
-      enum: ["CLIENT", "ADMIN"],
+      enum: ["CLIENT"],
       default: "CLIENT",
     },
     expireToken: Date,
