@@ -30,5 +30,8 @@ module.exports.getPostBySpecifiedUser = async (req, res) => {
     });
   }
 
-  return res.status(200).json({ data: ClientPost, status: "success" });
+  let sortFromLatest = ClientPost.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+  return res.status(200).json({ data: sortFromLatest, status: "success" });
 };

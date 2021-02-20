@@ -4,9 +4,9 @@ const { AdminSignUp } = require("../../model/AdminSignUp");
 module.exports.getOneClient = async (req, res) => {
   const { userId } = req.params;
 
-  const { role } = req.admin;
+  const { id } = req.admin;
 
-  const checkRole = await AdminSignUp.find({ account_type: role });
+  const checkRole = await AdminSignUp.find({ _id: id });
 
   if (!checkRole) {
     return res.status(403).jsoN({
