@@ -50,26 +50,19 @@ exports.ClientPostSignUp = async (req, res) => {
             status: "error",
           });
         } else {
-          const client = ClientSignUp.create({
-            //creating an instance of Client data
-            email,
-            firstName,
-            lastName,
-            registeredIpAddress,
-            account_type: Role.CLIENT,
-            password: hash,
-          });
-
           try {
             //saving the new member to mongodb
-            // await client.save();
-            await SendEmail(email, password, req);
-            return res.status(200).json({
-              massage: "signup successful",
-              data: client,
-              userId: client._id,
-              status: "success",
+            const client = ClientSignUp.create({
+              //creating an instance of Client data
+              email,
+              firstName,
+              lastName,
+              registeredIpAddress,
+              account_type: Role.CLIENT,
+              password: hash,
             });
+
+            await SendEmail(email, password, req, res);
           } catch (error) {
             res.status(400).json({
               message: error,

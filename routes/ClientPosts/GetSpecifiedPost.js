@@ -8,6 +8,10 @@ const {
 
 const ClientGetSpecifiedPostRouter = require("express").Router();
 
-ClientGetSpecifiedPostRouter.get("/one_post/:id", ClientVerifyAuth, getOnePost);
+ClientGetSpecifiedPostRouter.get(
+  "/one_post/:postId",
+  ClientVerifyAuth,
+  getOnePost
+);
 
 module.exports = { ClientGetSpecifiedPostRouter };

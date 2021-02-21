@@ -1,4 +1,7 @@
 const { ClientSignUp } = require("../../model/ClientSignUp");
+const {
+  profileUpdateValidation,
+} = require("../../middleware/Validators/ClientValidation/UpdateClientProfileValidation");
 
 module.exports.UpdateProfile = async (req, res) => {
   //destructuring updated data
@@ -12,6 +15,16 @@ module.exports.UpdateProfile = async (req, res) => {
     phone,
     posts,
   } = req.body;
+
+  const { error } = profileUpdateValidation.validate(req.body);
+
+  if (error) {
+    //sending error message
+    return res.status(400).json({
+      message: error.details[0].message.split('"').join(""),
+      status: "error",
+    });
+  }
 
   //assigning the updated data to wrapper
   let wrapper = {

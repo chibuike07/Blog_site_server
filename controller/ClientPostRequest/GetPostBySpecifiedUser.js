@@ -12,6 +12,7 @@ module.exports.getPostBySpecifiedUser = async (req, res) => {
     "comment",
     "createdAt",
     "updatedAt",
+    "status",
   ])
     .limit(limit * 1)
     .skip((page - 1) * limit);

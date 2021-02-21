@@ -36,7 +36,7 @@ module.exports.updatePost = async (req, res) => {
       return res.status(200).json({
         message: "update was successful",
         status: "success",
-        updatedEvents: updated,
+        updatedPost: updated,
       });
     }
   );

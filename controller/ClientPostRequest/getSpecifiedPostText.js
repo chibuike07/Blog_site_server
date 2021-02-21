@@ -1,24 +1,13 @@
 const { ClientPostRequest } = require("../../model/ClientPosts");
 const { ClientSignUp } = require("../../model/ClientSignUp");
+
 module.exports.getOnePost = async (req, res) => {
   //get  from params
-  const { id } = req.params;
+  const { postId } = req.params;
 
-  const Clientstatus = ClientSignUp.find({
-    _id: req.client.id,
-    active: { $ne: false },
-  });
-
-  if (!Clientstatus) {
-    return res.status(403).json({
-      message:
-        "access denied. seems you have been deactived from performing any actions or you don't have the rights!  Please contact the admin",
-      status: "error",
-    });
-  }
   //check for event that match the client query
   const findClientPost = await ClientPostRequest.findById({
-    _id: id,
+    _id: postId,
   });
 
   //check for error
@@ -29,9 +18,25 @@ module.exports.getOnePost = async (req, res) => {
     });
   }
 
+  const getNamesIdThatCommented = findClientPost.comment.map(
+    ({ clientId }) => clientId
+  );
+
+  const result = await ClientSignUp.find(
+    {
+      _id: getNamesIdThatCommented,
+    },
+    ["firstName", "lastName", "profileImage"]
+  );
+
+  const latestComment = result.sort(
+    (a, b) => new Date(b.createdOn) - new Date(a.createdOn)
+  );
+
   //   send data to the client
   return res.status(200).json({
     data: findClientPost,
+    posterName: latestComment,
     status: "success",
   });
 };

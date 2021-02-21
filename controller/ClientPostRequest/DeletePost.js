@@ -19,13 +19,27 @@ module.exports.deletePostByClient = async (req, res) => {
 
   const ClientPost = await ClientPostRequest.findByIdAndDelete(
     { _id: postId, clientId: id },
-    (err) => {
+
+    async (err, update) => {
       if (err) {
         return res.status(400).json({
-          message: "No post exist with the ID you specified",
+          message:
+            "sorry, something went wrong while trying to delete the post. Please try again",
           status: "error",
         });
       } else {
+        //getting post count by a single client
+        const ClientPostCount = await ClientPostRequest.find({
+          clientId: req.client.id,
+        }).countDocuments();
+
+        //updating the count to the post document of the client
+        const ClientData = await ClientSignUp.findOneAndUpdate(
+          { _id: id, active: true },
+          {
+            $set: { posts: ClientPostCount },
+          }
+        );
         return res.status(200).json({
           message: "post deleted successfully",
           status: "success",

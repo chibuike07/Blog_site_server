@@ -34,7 +34,7 @@ const ClientData = new Schema(
     email: { type: String, trim: true },
     profileImage: { type: String, trim: true, default: "" },
     password: { type: String, trim: true },
-    phone: { type: Number },
+    phone: { type: String },
     contact: contact,
     posts: { type: Number, default: 0 },
     registeredIpAddress: { type: String },

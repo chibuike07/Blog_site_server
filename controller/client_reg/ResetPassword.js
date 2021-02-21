@@ -29,10 +29,19 @@ exports.ResetPassword = async (req, res, next) => {
     resetToken: token,
   });
 
-  if (emailExist) {
-    next();
+  if (!emailExist) {
+    return res.status(404).json({
+      message: "no match was found!",
+      status: "error",
+    });
   }
 
+  if (emailExist.length < 1) {
+    return res.status(500).json({
+      message: "please check to see that you followed the right link.",
+      status: "error",
+    });
+  }
   //assigning the salt to use
   const saltR = 10;
 
@@ -57,7 +66,6 @@ exports.ResetPassword = async (req, res, next) => {
               email: email,
             },
             { $set: { password: hash } },
-
             async (err) => {
               if (err) {
                 return res.status(400).json({

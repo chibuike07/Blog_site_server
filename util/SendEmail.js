@@ -11,7 +11,7 @@ exports.SendEmail = async (signupClientEmail, password, req, res) => {
     host: "smtp.gmail.com",
     secure: true,
     auth: {
-      type: "login",
+      // type: "login",
       port: 465,
       pass: PASSWORD,
       user: EMAIL,
@@ -45,7 +45,7 @@ exports.SendEmail = async (signupClientEmail, password, req, res) => {
       });
     } else {
       return res.status(200).json({
-        message: "email sent successfully!",
+        message: "Your login link has been sent to your email.",
         status: "success",
       });
     }

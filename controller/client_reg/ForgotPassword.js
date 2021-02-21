@@ -21,7 +21,7 @@ module.exports.forgotPassword = async (req, res, next) => {
     });
   }
 
-  const generatedToken = await crypto.randomBytes(32);
+  const generatedToken = crypto.randomBytes(32);
 
   if (!generatedToken) {
     return res.status(400).json({
@@ -36,7 +36,7 @@ module.exports.forgotPassword = async (req, res, next) => {
   const Client = await ClientSignUp.findOne({ email: email });
 
   if (!Client) {
-    return res.status(400).json({ message: "Email does not exist" });
+    return res.status(404).json({ message: "Email does not exist" });
   }
 
   Client.resetToken = convertTokenToHexString;
@@ -44,12 +44,12 @@ module.exports.forgotPassword = async (req, res, next) => {
   const saveToken = await Client.save();
 
   if (!saveToken) {
-    return res.status(400).json({
+    return res.status(401).json({
       message: "error occured while trying to save the token",
       status: "error",
     });
   }
-  await ResetEmail(Client.email, req, Client.resetToken, res);
+  ResetEmail(Client.email, req, Client.resetToken, res);
 
   return res.status(200).json({
     message: "A message has been sent to your email",
