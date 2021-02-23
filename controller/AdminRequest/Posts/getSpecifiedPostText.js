@@ -41,14 +41,10 @@ module.exports.getOnePost = async (req, res) => {
     ["firstName", "lastName", "profileImage"]
   );
 
-  const latestComment = result.sort(
-    (a, b) => new Date(b.createdOn) - new Date(a.createdOn)
-  );
-
   //   send data to the client
   return res.status(200).json({
     data: findClientPost,
-    posterName: latestComment,
+    posterName: result,
     status: "success",
   });
 };

@@ -26,6 +26,10 @@ const storage = new CloudinaryStorage({
   },
 });
 
-const userProfileImage = multer({ storage: storage });
-
-module.exports = { userProfileImage };
+try {
+  const userProfileImage = multer({ storage: storage });
+  module.exports = { userProfileImage };
+} catch (error) {
+  console.log("object", error);
+  throw error;
+}
