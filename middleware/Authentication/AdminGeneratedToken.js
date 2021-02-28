@@ -10,7 +10,7 @@ const generateToken = (res, id, role) => {
     .cookie(process.env.SUPPER_TOKEN_KEY, token, {
       expires: new Date(Date.now() + expiration),
       secure: process.env.NODE_ENV === "production" ? true : false,
-      httpOnly: false,
+      httpOnly: true,
     })
     .json({
       message: "login successful",
