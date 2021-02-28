@@ -85,7 +85,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://192.168.43.35:3000", "http://localhost:3000"],
+    origin: [
+      "http://192.168.43.35:3000",
+      "https://hobbyluv-blog.herokuapp.com",
+    ],
     credentials: true,
   })
 );
