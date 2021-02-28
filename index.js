@@ -76,7 +76,7 @@ const options = {
 //setting the port to use
 const PORT = process.env.PORT || 4000;
 
-const { DEPLOYEDPATH, MONGODB_lOCAL_URI } = process.env;
+const { DEPLOYEDPATH, ORIGINPATH, MONGODB_lOCAL_URI } = process.env;
 
 //getting the mongodb uri from the env file
 const MONGODB_URI = process.env.MONGODB_URI || MONGODB_lOCAL_URI;
@@ -85,11 +85,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: `${DEPLOYEDPATH}`,
+    origin: [DEPLOYEDPATH, ORIGINPATH],
     credentials: true,
   })
 );
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
