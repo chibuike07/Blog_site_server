@@ -9,7 +9,7 @@ const generateToken = (res, id, role) => {
   return res
     .cookie(process.env.SUPPER_TOKEN_KEY, token, {
       expires: new Date(Date.now() + expiration),
-      secure: false, // set to true if your using https
+      secure: process.env.NODE_ENV === "production" ? true : false,
       httpOnly: false,
     })
     .json({
