@@ -1,27 +1,35 @@
 {
-  "name": "netapps_technology",
+  "name": "blog_site",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a blog site that allows registration by users. It focuses on allowing users to create a post and receive comments from other users. User are give all CRUD operation on the blog(s) they post",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cloudinary": "^1.23.0",
     "cookie-parser": "^1.4.5",
-    "jsonwebtoken": "^8.5.1",
-    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "nodemailer": "^6.4.14",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "generate-unique-id": "^2.0.1",
     "joi": "^17.3.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.11",
     "multer": "^1.4.2",
     "multer-storage-cloudinary": "^4.0.0",
+    "nodemailer": "^6.4.14",
     "nodemon": "^2.0.6"
   },
-  "keywords": [],
-  "author": "",
+  "engines": {
+    "node": "14.5"
+  },
+  "keywords": [
+    "heroku",
+    "blog"
+  ],
+  "author": "Chime Chibuike Princewill",
   "license": "ISC"
 }
