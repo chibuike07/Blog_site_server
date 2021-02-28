@@ -7,6 +7,7 @@ const {
 const { SendEmail } = require("../../util/SendEmail");
 
 const { Role } = require("../../util/Role");
+const { AdminSendEmail } = require("../../util/AdminSendMail");
 
 exports.AdminPostSignUp = async (req, res) => {
   //destructure the req body
@@ -59,22 +60,9 @@ exports.AdminPostSignUp = async (req, res) => {
             password: hash,
           });
 
-          try {
-            //saving the new member to mongodb
-            // await admin.save();
+          //saving the new member to mongodb
 
-            await SendEmail(email, password, req, res);
-            return res.status(200).json({
-              message:
-                "signup successful! Kindly check your email for your login details.",
-              status: "success",
-            });
-          } catch (error) {
-            res.status(400).json({
-              message: error,
-              status: "error",
-            });
-          }
+          await AdminSendEmail(email, password, req, res);
         }
       });
     }

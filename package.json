@@ -1,7 +1,7 @@
 {
-  "name": "netapps_technology",
+  "name": "blog_site",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a blog site that allows registration by users. It focuses on allowing users to create a post and receive comments from other users. User are give all CRUD operation on the blog(s) they post",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -23,7 +23,13 @@
     "nodemailer": "^6.4.14",
     "nodemon": "^2.0.6"
   },
-  "keywords": [],
-  "author": "",
+  "engines": {
+    "node": "14.5"
+  },
+  "keywords": [
+    "heroku",
+    "blog"
+  ],
+  "author": "Chime Chibuike Princewill",
   "license": "ISC"
 }
