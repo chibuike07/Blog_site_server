@@ -77,13 +77,19 @@ const options = {
 const PORT = process.env.PORT || 4000;
 
 const { DEPLOYEDPATH, ORIGINPATH, MONGODB_lOCAL_URI } = process.env;
+let corsOrigin = process.env.NODE_ENV === "production" ? DEPLOYEDPATH : ORIGINPATH,
 
 //getting the mongodb uri from the env file
 const MONGODB_URI = process.env.MONGODB_URI || MONGODB_lOCAL_URI;
 
 const app = express();
 
-app.use(cors({ origin: (origin, callback) => callback(null, true), credentials: true }));
+app.use(
+  cors({
+    origin: corsOrigin,
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
