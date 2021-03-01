@@ -77,24 +77,25 @@ const options = {
 const PORT = process.env.PORT || 4000;
 
 const { DEPLOYEDPATH, ORIGINPATH, MONGODB_lOCAL_URI } = process.env;
-let whitelist = [DEPLOYEDPATH, ORIGINPATH];
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-};
 
 //getting the mongodb uri from the env file
 const MONGODB_URI = process.env.MONGODB_URI || MONGODB_lOCAL_URI;
 
+let whitelist = [DEPLOYEDPATH, ORIGINPATH];
 const app = express();
 
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
