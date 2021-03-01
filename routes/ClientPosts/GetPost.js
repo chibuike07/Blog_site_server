@@ -4,6 +4,10 @@ const {
   ClientVerifyAuth,
 } = require("../../middleware/Authentication/ClientVerifyAuth");
 
-ClientGetPostRouter.get("/post", ClientVerifyAuth, getPost);
+ClientGetPostRouter.get(
+  "/post",
+  //  ClientVerifyAuth,
+  getPost
+);
 
 module.exports = { ClientGetPostRouter };
