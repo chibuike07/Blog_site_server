@@ -83,15 +83,10 @@ const MONGODB_URI = process.env.MONGODB_URI || MONGODB_lOCAL_URI;
 
 const app = express();
 
-app.use(
-  cors({
-    origin: [DEPLOYEDPATH, ORIGINPATH],
-    credentials: true,
-  })
-);
+app.use(cors({ origin: (origin, callback) => callback(null, true), credentials: true }));
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cookieParser());
 
 app.use("/api/v1/", ClientSignupRouter);
 app.use("/api/v1/", AdminRegRouter);
