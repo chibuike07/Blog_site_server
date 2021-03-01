@@ -81,12 +81,13 @@ const { DEPLOYEDPATH, ORIGINPATH, MONGODB_lOCAL_URI } = process.env;
 //getting the mongodb uri from the env file
 const MONGODB_URI = process.env.MONGODB_URI || MONGODB_lOCAL_URI;
 
-let whitelist = [DEPLOYEDPATH, ORIGINPATH];
+let whitelist = DEPLOYEDPATH;
 const app = express();
 
 app.use(
   cors({
     origin: function (origin, callback) {
+      console.log("origin", origin);
       if (whitelist.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
