@@ -95,9 +95,28 @@ const app = express();
 //    },
 //    credentials: true,
 //  });
+
+// const sessionConfig = {
+//   secret: "MYSECRET",
+//   name: "appName",
+//   resave: false,
+//   saveUninitialized: false,
+//   store: store,
+//   cookie: {
+//     sameSite: "strict", // THIS is the config you are looing for.
+//   },
+// };
+
+// if (process.env.NODE_ENV === "production") {
+//   app.set("trust proxy", 1); // trust first proxy
+//   sessionConfig.cookie.secure = true; // serve secure cookies
+// }
+
+// app.use(session(sessionConfig));
+
 app.use(
   cors({
-    origin: [`${process.env.FRONT_URL}`,DEPLOYEDPATH, "http://localhost:3000" ],
+    origin: [`${process.env.FRONT_URL}`, DEPLOYEDPATH, "http://localhost:3000"],
     credentials: true,
   })
 );

@@ -11,6 +11,7 @@ const generateToken = (res, id, role) => {
       expires: new Date(Date.now() + expiration),
       secure: process.env.NODE_ENV === "production" ? true : false,
       httpOnly: true,
+      sameSite: "none",
     })
     .json({
       message: "login successful",
