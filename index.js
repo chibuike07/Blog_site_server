@@ -80,43 +80,11 @@ const { DEPLOYEDPATH, ORIGINPATH, MONGODB_lOCAL_URI } = process.env;
 
 //getting the mongodb uri from the env file
 const MONGODB_URI = process.env.MONGODB_URI || MONGODB_lOCAL_URI;
-
-let whitelist = DEPLOYEDPATH;
 const app = express();
-
-//  cors({
-//    origin: function (origin, callback) {
-//      console.log("origin", origin);
-//      if (whitelist.indexOf(origin) !== -1) {
-//        callback(null, true);
-//      } else {
-//        callback(new Error("Not allowed by CORS"));
-//      }
-//    },
-//    credentials: true,
-//  });
-
-// const sessionConfig = {
-//   secret: "MYSECRET",
-//   name: "appName",
-//   resave: false,
-//   saveUninitialized: false,
-//   store: store,
-//   cookie: {
-//     sameSite: "strict", // THIS is the config you are looing for.
-//   },
-// };
-
-// if (process.env.NODE_ENV === "production") {
-//   app.set("trust proxy", 1); // trust first proxy
-//   sessionConfig.cookie.secure = true; // serve secure cookies
-// }
-
-// app.use(session(sessionConfig));
 
 app.use(
   cors({
-    origin: [`${process.env.FRONT_URL}`, DEPLOYEDPATH, "http://localhost:3000"],
+    origin: [`${process.env.FRONT_URL}`, DEPLOYEDPATH, ORIGINPATH],
     credentials: true,
   })
 );
