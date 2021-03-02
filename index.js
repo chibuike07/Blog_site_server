@@ -84,16 +84,20 @@ const MONGODB_URI = process.env.MONGODB_URI || MONGODB_lOCAL_URI;
 let whitelist = DEPLOYEDPATH;
 const app = express();
 
+//  cors({
+//    origin: function (origin, callback) {
+//      console.log("origin", origin);
+//      if (whitelist.indexOf(origin) !== -1) {
+//        callback(null, true);
+//      } else {
+//        callback(new Error("Not allowed by CORS"));
+//      }
+//    },
+//    credentials: true,
+//  });
 app.use(
   cors({
-    origin: function (origin, callback) {
-      console.log("origin", origin);
-      if (whitelist.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: [`${process.env.FRONT_URL}`, "http://localhost:3000", DEPLOYEDPATH],
     credentials: true,
   })
 );
