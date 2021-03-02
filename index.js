@@ -97,7 +97,7 @@ const app = express();
 //  });
 app.use(
   cors({
-    origin: [`${process.env.FRONT_URL}`, "http://localhost:3000", DEPLOYEDPATH],
+    origin: [`${process.env.FRONT_URL}`,DEPLOYEDPATH, "http://localhost:3000" ],
     credentials: true,
   })
 );
